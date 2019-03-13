@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- 向zookeeper 订阅provider 的地址，由zookeeper 定时推送 -->
+    <dubbo:registry address="${dubbo.consumer.zk.address}" timeout="60000"/>
+
+    <dubbo:registry id="wechatAppletClient" address="${dubbo.registry.address}"/>
+    <dubbo:application name="yishouyun-order-provider"/>
+    <!-- API系统调用:账户操作 -->
+    <dubbo:reference id="walletAccManageService" retries="3"
+                     timeout="5000" check="false"
+                     interface="cn.ipaynow.member.wallet.api.itf.WalletAccManageService"
+                     group="${dubbo.consumer.group}" version="${dubbo.consumer.version}"/>
+    <dubbo:reference id="walletAuthCodeService" retries="3"
+                     timeout="5000" check="false"
+                     interface="cn.ipaynow.member.wallet.api.itf.WalletAuthCodeService"
+                     group="${dubbo.consumer.group}" version="${dubbo.consumer.version}"/>
+    <dubbo:reference id="walletBizService" retries="0"
+                     timeout="3600" check="false"
+                     interface="cn.ipaynow.member.wallet.api.itf.WalletBizService"
+                     group="${dubbo.consumer.group}" version="${dubbo.consumer.version}"/>
+</beans>

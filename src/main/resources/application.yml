@@ -1,0 +1,96 @@
+server:
+  port: 9092
+spring:
+  datasource:
+    name: test
+    url: jdbc:mysql://192.168.103.98:3306/yishouyun_order?zeroDateTimeBehavior=convertToNull
+    username: root
+    password: $root@ipaynow_test
+    # 使用druid数据源
+  redis:
+    host: 192.168.51.215
+    port: 6380
+    lettuce:
+      pool:
+        max-active: 200
+        max-wait: -1ms
+        max-idle: 100
+        min-idle: 5
+    password: ipaynow123
+shansong:
+  md5: k83ply1y4ikc
+  token: w2fTBwFLYqGuc6pdrR7d/f0pzxGHnkJ9hxueldz1JBQ=
+  partnerNo: 2737
+  merchantId: SS2737
+  merchantName: yishouyun
+  senderMobile: 13701067692
+dubbo:
+  consumer:
+    version: 1.0.0
+    group: beta
+    zk:
+      address: zookeeper://192.168.0.51:2181?backup=192.168.0.51:2182,192.168.0.51:2183
+    wallet:
+      group: dev
+  registry:
+    address: zookeeper://192.168.0.51:2181
+  provider:
+    group: beta
+    version: 1.0.0
+    retries: 3
+ipaynow:
+  ifs:
+    wp001:
+      #url: https://dby.ipaynow.cn/api/payment/
+      #url: https://192.168.0.54:8698/api/payment/
+      #url:  https://develop-test.ipaynow.cn/api/payment/
+      url: http://192.168.99.54:8698/api/payment/
+      # 商户后台通知URL
+      notifyUrl: http://192.168.51.82:10001/miniprogram/api/ipncb/pay
+      #notifyUrl: http://192.168.51.82:10001/miniprogram/api/ipncb/v1
+    mq002:
+      url: http://192.168.99.54:8698/
+    r001:
+      funcode: R001
+      version: 1.0.0
+      mhtCharset: UTF-8
+      url: http://192.168.99.54:8698/refund/refundOrder
+      notifyUrl: https://192.168.51.82:10001/miniprogram/api/ipncb/refund
+      signType: MD5
+    q001:
+      funcode: Q001
+      version: 1.0.0
+      mhtCharset: UTF-8
+      url: http://192.168.99.54:8698/refund/refundQuery
+      signType: MD5
+rocketmq:
+  namesrvAddr: 192.168.0.26:9876
+logging:
+  level:
+    com.ipaynow.yishouyun.order.provider.dao: debug
+    com.ipaynow.yishouyun.wallet.provider.mapper: debug
+
+# 钱包配置
+wallet:
+  wp001:
+    funcode: WP001
+    version: 1.0.0
+    mhtCharset: UTF-8
+    mhtSignType: MD5
+    outputType: 1
+    url: http://192.168.99.54:8698/api/payment/
+#    url: https://pay.ipaynow.cn/
+    notifyUrl: http://192.168.51.82:10001/wallet/callback/mini/pay
+  mq002:
+    funcode: MQ002
+    version: 1.0.0
+    mhtCharset: UTF-8
+    mhtSignType: MD5
+    url: https://dby.ipaynow.cn/api/payment/
+  balance:
+    version: 1.0.0
+    mhtOrderType: 05
+    notifyUrl: http://192.168.51.82:10001/miniprogram/api/ipncb/wallet-pay
+  offline:
+    orderTimeOut: 1200
+    notifyUrl: http://192.168.51.82:10001/miniprogram/api/ipncb/offline-pay
