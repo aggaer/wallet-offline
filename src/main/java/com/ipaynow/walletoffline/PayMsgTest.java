@@ -7,7 +7,6 @@ import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 import org.apache.rocketmq.common.message.MessageExt;
-import org.apache.rocketmq.common.protocol.heartbeat.MessageModel;
 
 import java.nio.charset.Charset;
 
@@ -19,10 +18,9 @@ public class PayMsgTest {
     private static final String NAMESRV_ADDR = "192.168.0.26:9876";
 
     public static void main(String[] args) throws MQClientException {
-        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("order-prePay-consumers");
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("authcode-msg-query");
         consumer.setNamesrvAddr(NAMESRV_ADDR);
-        consumer.subscribe("orders", "prepay-wallet||prepay");
-        consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_LAST_OFFSET);
+        consumer.subscribe("wallets", "authcode-query");
         consumer.registerMessageListener((MessageListenerConcurrently) (msgs, context) -> {
             for (MessageExt message : msgs) {
                 System.out.println(message.getTags());
@@ -32,4 +30,5 @@ public class PayMsgTest {
         });
         consumer.start();
     }
+
 }

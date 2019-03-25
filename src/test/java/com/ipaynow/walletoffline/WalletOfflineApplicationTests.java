@@ -32,13 +32,13 @@ public class WalletOfflineApplicationTests {
     public void contextLoads() {
         OfflinePaymentReqBean offlinePaymentReqBean = new OfflinePaymentReqBean();
         offlinePaymentReqBean.setNotifyUrl("www.baidu.com");
-        offlinePaymentReqBean.setAmount(200L);
+        offlinePaymentReqBean.setAmount(2L);
         offlinePaymentReqBean.setMchId("000000100537868");
         offlinePaymentReqBean.setTransNo(transNo);
-        offlinePaymentReqBean.setUserId("100000220146");
-        offlinePaymentReqBean.setPayAuthCode("42303178851072081920");
-        offlinePaymentReqBean.setAppId("154606529764260");
-        offlinePaymentReqBean.setStoreId("000000100537843");
+        offlinePaymentReqBean.setUserId("100000240238");
+        offlinePaymentReqBean.setPayAuthCode("42306105491750125568");
+        offlinePaymentReqBean.setAppId("154501694429179");
+        offlinePaymentReqBean.setStoreId("000000100537918");
         OfflinePaymentRespBean offlinePaymentRespBean = walletBizService.offlinePayment(offlinePaymentReqBean);
         Assert.assertNotNull(offlinePaymentRespBean);
         System.out.println(JSON.toJSONString(offlinePaymentRespBean, true));
@@ -47,7 +47,7 @@ public class WalletOfflineApplicationTests {
     @Test
     public void fetchAuthCode() {
         AuthCodeReqBean authCodeReqBean = new AuthCodeReqBean();
-        authCodeReqBean.setUserId("100000220146");
+        authCodeReqBean.setUserId("100000240238");
         authCodeReqBean.setMchId("000000100537868");
         AuthCodeRespBean authCodeRespBean = walletAuthCodeService.gainAuthCode(authCodeReqBean);
         Assert.assertNotNull(authCodeRespBean);
@@ -57,11 +57,12 @@ public class WalletOfflineApplicationTests {
     @Test
     public void query() {
         QueryResultReqBean queryResultReqBean = new QueryResultReqBean();
-        queryResultReqBean.setPayAuthCode("42303177471276089344");
-        queryResultReqBean.setUserId("100000220146");
+        queryResultReqBean.setPayAuthCode("42306105491750125568");
+        queryResultReqBean.setUserId("100000240238");
         queryResultReqBean.setMchId("000000100537868");
         QueryResultRespBean queryResultRespBean = walletAuthCodeService.queryConsumeResByAuthCode(queryResultReqBean);
         Assert.assertNotNull(queryResultRespBean);
+        System.out.println(queryResultRespBean.getStillNeedAmount());
         System.out.println(JSON.toJSONString(queryResultRespBean, true));
     }
 }

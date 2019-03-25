@@ -22,4 +22,10 @@
                      timeout="3600" check="false"
                      interface="cn.ipaynow.member.wallet.api.itf.WalletBizService"
                      group="${dubbo.consumer.group}" version="${dubbo.consumer.version}"/>
+    <!--订单支付处理服务-->
+    <dubbo:reference cluster="failfast" timeout="5000" id="orderPayService" check="false"
+                     interface="com.ipaynow.yishouyun.order.service.OrderPayService"/>
+    <dubbo:reference check="false" cluster="failfast" timeout="5000" id="orderServiceRefactor"
+                     retries="3" version="1.0.0" group="${dubbo.consumer.group}"
+                     interface="com.ipaynow.yishouyun.order.service.OrderServiceRefactor"/>
 </beans>
