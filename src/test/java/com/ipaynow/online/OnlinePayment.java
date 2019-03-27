@@ -1,5 +1,8 @@
 package com.ipaynow.online;
 
+import cn.ipaynow.member.wallet.api.entity.ConsumeQueryReqBean;
+import cn.ipaynow.member.wallet.api.entity.ConsumeQueryRespBean;
+import cn.ipaynow.member.wallet.api.itf.WalletBizService;
 import com.alibaba.fastjson.JSON;
 import com.ipaynow.walletoffline.WalletOfflineApplication;
 import com.ipaynow.yishouyun.order.dto.OrderBaseDto;
@@ -29,6 +32,8 @@ public class OnlinePayment {
     private OrderPayService orderPayService;
     @Resource
     private OrderServiceRefactor orderServiceRefactor;
+    @Resource
+    private WalletBizService walletBizService;
 
     @Test
     public void testPay() {
@@ -59,5 +64,14 @@ public class OnlinePayment {
         IpayNowPaymentResponse response = orderServiceRefactor.preOrder(orderBaseDto, payParams);
         Assert.assertNotNull(response);
         System.out.println(JSON.toJSONString(response));
+    }
+
+    @Test
+    public void consumeQuery(){
+        ConsumeQueryReqBean consumeQueryReqBean = new ConsumeQueryReqBean();
+        consumeQueryReqBean.setMchId("000000100537578");
+        consumeQueryReqBean.setTransNo("c200216201903261135061316760");
+        ConsumeQueryRespBean consumeQueryRespBean = walletBizService.consumeQuery(consumeQueryReqBean);
+        System.out.println(JSON.toJSONString(consumeQueryRespBean));
     }
 }

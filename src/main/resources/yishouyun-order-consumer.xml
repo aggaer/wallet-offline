@@ -28,4 +28,9 @@
     <dubbo:reference check="false" cluster="failfast" timeout="5000" id="orderServiceRefactor"
                      retries="3" version="1.0.0" group="${dubbo.consumer.group}"
                      interface="com.ipaynow.yishouyun.order.service.OrderServiceRefactor"/>
+    <dubbo:reference id="walletTransRecordService" retries="2" timeout="10000"
+                     check="false"
+                     interface="com.ipaynow.yishouyun.wallet.service.WalletTransRecordService"
+                     group="${dubbo.consumer.group}"
+                     version="${dubbo.consumer.version}"/>
 </beans>
